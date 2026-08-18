@@ -1,0 +1,37 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      gorm:
+        patterns: ["gorm.io/*", "github.com/glebarez/*"]
+      hertz:
+        patterns: ["github.com/cloudwego/*"]
+      prometheus:
+        patterns: ["github.com/prometheus/*"]
+
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      react:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
+      vite:
+        patterns: ["vite", "@vitejs/*"]
+      tanstack:
+        patterns: ["@tanstack/*"]
+
+  - package-ecosystem: "docker"
+    directory: "/backend"
+    schedule:
+      interval: "monthly"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"

@@ -1,0 +1,48 @@
+# LaundryPro reverse proxy: terminates TLS, routes the API + Swagger to the
+# app container and everything else (the React SPA) to the web container.
+#
+# DOMAIN can be overridden via the APP_DOMAIN compose variable. Use a real
+# domain for automatic HTTPS (Caddy obtains Let's Encrypt certificates); use
+# an internal placeholder for local development.
+{
+	email {$ACME_EMAIL:admin@example.com}
+}
+
+{$APP_DOMAIN:localhost} {
+	encode zstd gzip
+
+	# App health/readiness probes pass through so orchestrators and
+	# monitoring can reach them over the public endpoint. `handle` (not
+	# handle_path) preserves the path, so /api/v1/health/ready reaches the
+	# app unchanged. handle blocks are evaluated in document order (first
+	# match wins), so keep this specific matcher before /api/*.
+	handle /api/v1/health* {
+		reverse_proxy app:8080
+	}
+
+	# API and Swagger UI -> backend, path preserved.
+	handle /api/* {
+		reverse_proxy app:8080
+	}
+	handle /swagger/* {
+		reverse_proxy app:8080
+	}
+
+	# Prometheus scrapes app:8080 on the docker network directly; keep the
+	# metrics endpoint (and any sub-path) off the public edge.
+	handle /metrics* {
+		respond 404
+	}
+
+	# Everything else -> the SPA (static files with /index.html fallback).
+	handle {
+		reverse_proxy web:80
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "no-referrer"
+	}
+}

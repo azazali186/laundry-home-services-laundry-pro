@@ -1,0 +1,33 @@
+# Prometheus alerting rules for LaundryPro.
+# Adjust thresholds to your SLOs before going live.
+groups:
+  - name: laundrypro
+    rules:
+      - alert: LaundryProUnready
+        expr: probe_success{job="blackbox-readiness"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "LaundryPro readiness probe failing"
+          description: "The readiness endpoint has been down for more than 2 minutes."
+
+      - alert: LaundryProOutboxBacklog
+        expr: laundrypro_outbox_pending_events > 100
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Outbox backlog is growing"
+          description: "{{ $value }} events are stuck pending; the relay may be failing."
+
+      - alert: LaundryProHighErrorRate
+        expr: |
+          sum(rate(laundrypro_http_requests_total{status=~"5.."}[5m]))
+            / clamp_min(sum(rate(laundrypro_http_requests_total[5m])), 1) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "5xx error rate above 5%"
+          description: "The HTTP 5xx rate is {{ $value | humanizePercentage }} over the last 5 minutes."

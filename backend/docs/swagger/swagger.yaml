@@ -1,0 +1,2654 @@
+definitions:
+  analytics.DashboardRequest:
+    properties:
+      from:
+        description: RFC3339 or YYYY-MM-DD
+        type: string
+      to:
+        type: string
+    type: object
+  auth.AssignPermissionsRequest:
+    properties:
+      permission_ids:
+        items:
+          type: string
+        type: array
+      role_id:
+        type: string
+    type: object
+  auth.ChangePasswordRequest:
+    properties:
+      current_password:
+        type: string
+      new_password:
+        type: string
+    type: object
+  auth.CreateRoleRequest:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      permission_ids:
+        items:
+          type: string
+        type: array
+    type: object
+  auth.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      role_ids:
+        items:
+          type: string
+        type: array
+    type: object
+  auth.DeleteRoleRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  auth.DeleteUserRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  auth.ListAuditLogsRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  auth.ListLoginLogsRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  auth.ListPermissionsRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  auth.ListRolesRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  auth.ListUsersRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  auth.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  auth.UpdateRoleRequest:
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      permission_ids:
+        items:
+          type: string
+        type: array
+    type: object
+  auth.UpdateUserRequest:
+    properties:
+      id:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      role_ids:
+        items:
+          type: string
+        type: array
+    type: object
+  booking.CancelRequest:
+    properties:
+      id:
+        type: string
+      reason:
+        type: string
+    type: object
+  booking.CreateRequest:
+    properties:
+      currency:
+        type: string
+      customer_id:
+        type: string
+      dropoff_address:
+        type: string
+      estimated_amount:
+        type: number
+      notes:
+        type: string
+      pickup_address:
+        type: string
+      pickup_from:
+        type: string
+      pickup_to:
+        type: string
+      service_type_id:
+        type: string
+      source:
+        type: string
+    type: object
+  booking.DeleteRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  booking.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  booking.UpdateRequest:
+    properties:
+      dropoff_address:
+        type: string
+      estimated_amount:
+        type: number
+      id:
+        type: string
+      notes:
+        type: string
+      pickup_address:
+        type: string
+      pickup_from:
+        type: string
+      pickup_to:
+        type: string
+    type: object
+  combo.CreateRequest:
+    properties:
+      code:
+        type: string
+      currency:
+        type: string
+      description:
+        type: string
+      is_active:
+        type: boolean
+      is_featured:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/combo.ItemRequest'
+        type: array
+      name:
+        type: string
+      price:
+        type: number
+      renewal_type:
+        description: none | auto | manual
+        type: string
+      unit:
+        type: string
+      validity_days:
+        description: 0 = no expiry
+        type: integer
+    type: object
+  combo.DeleteRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  combo.ItemRequest:
+    properties:
+      quantity:
+        type: integer
+      service_type_id:
+        type: string
+    type: object
+  combo.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  combo.UpdateRequest:
+    properties:
+      code:
+        type: string
+      currency:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      is_active:
+        type: boolean
+      is_featured:
+        type: boolean
+      items:
+        items:
+          $ref: '#/definitions/combo.ItemRequest'
+        type: array
+      name:
+        type: string
+      price:
+        type: number
+      renewal_type:
+        type: string
+      unit:
+        type: string
+      validity_days:
+        type: integer
+    type: object
+  delivery.CreateRequest:
+    properties:
+      address:
+        type: string
+      agent_id:
+        type: string
+      notes:
+        type: string
+      order_id:
+        type: string
+      scheduled_at:
+        type: string
+    type: object
+  delivery.IDRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  delivery.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  delivery.UpdateRequest:
+    properties:
+      address:
+        type: string
+      agent_id:
+        type: string
+      id:
+        type: string
+      notes:
+        type: string
+      scheduled_at:
+        type: string
+    type: object
+  garment.CreateRequest:
+    properties:
+      color:
+        type: string
+      damage_notes:
+        type: string
+      fabric:
+        type: string
+      instructions:
+        type: string
+      name:
+        type: string
+      order_id:
+        type: string
+      quantity:
+        type: integer
+      type:
+        type: string
+    type: object
+  garment.IDRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  garment.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  garment.UpdateRequest:
+    properties:
+      color:
+        type: string
+      damage_notes:
+        type: string
+      fabric:
+        type: string
+      id:
+        type: string
+      instructions:
+        type: string
+      name:
+        type: string
+      quantity:
+        type: integer
+      status:
+        type: string
+      type:
+        type: string
+    type: object
+  inventory.AdjustRequest:
+    properties:
+      delta:
+        type: number
+      id:
+        type: string
+      reason:
+        type: string
+    type: object
+  inventory.CreateRequest:
+    properties:
+      category:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+      quantity_on_hand:
+        type: number
+      reorder_level:
+        type: number
+      sku:
+        type: string
+      unit:
+        type: string
+      unit_cost:
+        type: number
+    type: object
+  inventory.IDRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  inventory.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  inventory.UpdateRequest:
+    properties:
+      category:
+        type: string
+      id:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+      reorder_level:
+        type: number
+      unit:
+        type: string
+      unit_cost:
+        type: number
+    type: object
+  invoice.CreateRequest:
+    properties:
+      billing_name:
+        type: string
+      discount:
+        type: number
+      due_date:
+        type: string
+      order_id:
+        type: string
+      subtotal:
+        type: number
+      tax_amount:
+        type: number
+    type: object
+  invoice.IDRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  invoice.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  invoice.UpdateRequest:
+    properties:
+      billing_name:
+        type: string
+      discount:
+        type: number
+      due_date:
+        type: string
+      id:
+        type: string
+      status:
+        type: string
+      subtotal:
+        type: number
+      tax_amount:
+        type: number
+    type: object
+  notification.CreateRequest:
+    properties:
+      body:
+        type: string
+      channel:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      user_id:
+        type: string
+    type: object
+  notification.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  notification.MarkReadRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  order.CreateRequest:
+    properties:
+      booking_id:
+        type: string
+      currency:
+        type: string
+      customer_id:
+        type: string
+      discount_amount:
+        type: number
+      item_count:
+        type: integer
+      note:
+        type: string
+      pickup_id:
+        type: string
+      priority:
+        type: string
+      service_type_id:
+        type: string
+      tax_rate:
+        description: nil = shop default; explicit 0 = tax-exempt
+        type: number
+      total_amount:
+        type: number
+    type: object
+  order.IDRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  order.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  order.UpdateRequest:
+    properties:
+      discount_amount:
+        type: number
+      id:
+        type: string
+      item_count:
+        type: integer
+      note:
+        type: string
+      priority:
+        type: string
+      tax_amount:
+        type: number
+      total_amount:
+        type: number
+    type: object
+  order.UpdateStatusRequest:
+    properties:
+      id:
+        type: string
+      reason:
+        type: string
+      status:
+        type: string
+    type: object
+  payment.CaptureRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  payment.CreateRequest:
+    properties:
+      amount:
+        type: number
+      card_last4:
+        type: string
+      currency:
+        type: string
+      gateway:
+        type: string
+      method:
+        type: string
+      note:
+        type: string
+      order_id:
+        type: string
+      transaction_id:
+        type: string
+    type: object
+  payment.IDRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  payment.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  payment.RefundRequest:
+    properties:
+      amount:
+        type: number
+      id:
+        type: string
+    type: object
+  payment.UpdateRequest:
+    properties:
+      gateway:
+        type: string
+      id:
+        type: string
+      method:
+        type: string
+      note:
+        type: string
+    type: object
+  pickup.CreateRequest:
+    properties:
+      address:
+        type: string
+      agent_id:
+        type: string
+      booking_id:
+        type: string
+      notes:
+        type: string
+      scheduled_at:
+        type: string
+    type: object
+  pickup.IDRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  pickup.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  pickup.UpdateRequest:
+    properties:
+      address:
+        type: string
+      agent_id:
+        type: string
+      id:
+        type: string
+      notes:
+        type: string
+      scheduled_at:
+        type: string
+    type: object
+  rating.CreateRequest:
+    properties:
+      comment:
+        type: string
+      customer_id:
+        type: string
+      is_public:
+        type: boolean
+      order_id:
+        type: string
+      score:
+        type: integer
+    type: object
+  rating.IDRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  rating.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  rating.UpdateRequest:
+    properties:
+      comment:
+        type: string
+      id:
+        type: string
+      is_public:
+        type: boolean
+      score:
+        type: integer
+    type: object
+  response.Envelope:
+    properties:
+      code:
+        type: integer
+      data:
+        type: any
+      message:
+        type: string
+      pagination:
+        $ref: '#/definitions/response.Pagination'
+      request_id:
+        type: string
+      summary:
+        type: any
+    type: object
+  response.Pagination:
+    properties:
+      has_more:
+        type: boolean
+      limit:
+        type: integer
+      offset:
+        type: integer
+      total:
+        type: integer
+    type: object
+  servicetype.CreateRequest:
+    properties:
+      code:
+        type: string
+      currency:
+        type: string
+      description:
+        type: string
+      estimated_days:
+        type: integer
+      icon:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+      price:
+        type: number
+      tax_rate:
+        type: number
+      unit:
+        type: string
+    type: object
+  servicetype.DeleteRequest:
+    properties:
+      id:
+        type: string
+    type: object
+  servicetype.ListRequest:
+    properties:
+      filters:
+        additionalProperties:
+          type: string
+        type: object
+      limit:
+        type: integer
+      offset:
+        type: integer
+      search:
+        type: string
+      sort_by:
+        type: string
+      sort_order:
+        type: string
+    type: object
+  servicetype.UpdateRequest:
+    properties:
+      currency:
+        type: string
+      description:
+        type: string
+      estimated_days:
+        type: integer
+      icon:
+        type: string
+      id:
+        type: string
+      is_active:
+        type: boolean
+      name:
+        type: string
+      price:
+        type: number
+      tax_rate:
+        type: number
+      unit:
+        type: string
+    type: object
+  settings.UpdateRequest:
+    properties:
+      address:
+        type: string
+      business_email:
+        type: string
+      business_name:
+        type: string
+      business_phone:
+        type: string
+      city:
+        type: string
+      currency:
+        type: string
+      invoice_prefix:
+        type: string
+      receipt_footer:
+        type: string
+      tax_id:
+        type: string
+      tax_rate:
+        type: number
+      timezone:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /analytics/dashboard:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Date range
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/analytics.DashboardRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Operational dashboard aggregates
+      tags:
+      - analytics
+  /audit-logs/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.ListAuditLogsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List audit trail entries
+      tags:
+      - logs
+  /auth/change-password:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Passwords
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Rotate the current user's password
+      tags:
+      - auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Credentials
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      summary: Authenticate a user
+      tags:
+      - auth
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Invalidate the current session
+      tags:
+      - auth
+  /auth/me:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Current user profile
+      tags:
+      - auth
+  /bookings:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/booking.DeleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a booking (id in body)
+      tags:
+      - bookings
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/booking.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a booking (id in body)
+      tags:
+      - bookings
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Booking
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/booking.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a booking
+      tags:
+      - bookings
+  /bookings/cancel:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Booking id + reason
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/booking.CancelRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Cancel a booking
+      tags:
+      - bookings
+  /bookings/confirm:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Booking id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/booking.CancelRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Confirm a pending booking
+      tags:
+      - bookings
+  /bookings/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/booking.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List bookings with offset pagination
+      tags:
+      - bookings
+  /combos:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/combo.DeleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a combo (id in body)
+      tags:
+      - combos
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/combo.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a combo (id in body)
+      tags:
+      - combos
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Combo
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/combo.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a combo (priced bundle of services)
+      tags:
+      - combos
+  /combos/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/combo.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List combos with offset pagination
+      tags:
+      - combos
+  /deliveries:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/delivery.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a delivery (id in body)
+      tags:
+      - deliveries
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/delivery.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a delivery (id in body)
+      tags:
+      - deliveries
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Delivery
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/delivery.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a delivery
+      tags:
+      - deliveries
+  /deliveries/complete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Delivery id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/delivery.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Mark a delivery delivered
+      tags:
+      - deliveries
+  /deliveries/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/delivery.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List deliveries with offset pagination
+      tags:
+      - deliveries
+  /garments:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/garment.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a garment (id in body)
+      tags:
+      - garments
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/garment.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a garment (id in body)
+      tags:
+      - garments
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Garment
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/garment.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a garment
+      tags:
+      - garments
+  /garments/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/garment.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List garments with offset pagination
+      tags:
+      - garments
+  /inventory:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/inventory.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete an inventory item (id in body)
+      tags:
+      - inventory
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/inventory.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update an inventory item (id in body)
+      tags:
+      - inventory
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Item
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/inventory.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create an inventory item
+      tags:
+      - inventory
+  /inventory/adjust:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Delta
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/inventory.AdjustRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Adjust stock by a signed delta (locked)
+      tags:
+      - inventory
+  /inventory/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/inventory.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List inventory with offset pagination
+      tags:
+      - inventory
+  /invoices:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/invoice.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete an invoice (id in body)
+      tags:
+      - invoices
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/invoice.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update an invoice (id in body)
+      tags:
+      - invoices
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Invoice
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/invoice.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create an invoice
+      tags:
+      - invoices
+  /invoices/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/invoice.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List invoices with offset pagination
+      tags:
+      - invoices
+  /invoices/mark-paid:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Invoice id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/invoice.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Mark an invoice paid
+      tags:
+      - invoices
+  /login-logs/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.ListLoginLogsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List login attempts
+      tags:
+      - logs
+  /notifications:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Notification
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/notification.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a notification
+      tags:
+      - notifications
+  /notifications/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/notification.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List notifications with offset pagination
+      tags:
+      - notifications
+  /notifications/mark-read:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Notification id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/notification.MarkReadRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Mark a notification read
+      tags:
+      - notifications
+  /orders:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/order.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete an order (id in body)
+      tags:
+      - orders
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/order.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update an order (id in body)
+      tags:
+      - orders
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Order
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/order.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create an order
+      tags:
+      - orders
+  /orders/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/order.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List orders with offset pagination
+      tags:
+      - orders
+  /orders/status:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Transition
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/order.UpdateStatusRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Transition an order's status
+      tags:
+      - orders
+  /payments:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/payment.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a payment (id in body)
+      tags:
+      - payments
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/payment.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a payment (id in body)
+      tags:
+      - payments
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Payment
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/payment.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a payment
+      tags:
+      - payments
+  /payments/capture:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Payment id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/payment.CaptureRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Capture a pending payment (idempotent)
+      tags:
+      - payments
+  /payments/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/payment.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List payments with offset pagination
+      tags:
+      - payments
+  /payments/refund:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Payment id + amount
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/payment.RefundRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Refund a paid payment
+      tags:
+      - payments
+  /permissions/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.ListPermissionsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List permissions with offset pagination
+      tags:
+      - permissions
+  /pickups:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/pickup.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a pickup (id in body)
+      tags:
+      - pickups
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/pickup.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a pickup (id in body)
+      tags:
+      - pickups
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Pickup
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/pickup.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a pickup
+      tags:
+      - pickups
+  /pickups/complete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Pickup id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/pickup.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Mark a pickup completed
+      tags:
+      - pickups
+  /pickups/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/pickup.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List pickups with offset pagination
+      tags:
+      - pickups
+  /pricing:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      summary: Public pricing catalog (services, combos, shop defaults)
+      tags:
+      - pricing
+  /ratings:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rating.IDRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a rating (id in body)
+      tags:
+      - ratings
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rating.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a rating (id in body)
+      tags:
+      - ratings
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Rating
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rating.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a rating
+      tags:
+      - ratings
+  /ratings/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/rating.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List ratings with offset pagination
+      tags:
+      - ratings
+  /roles:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Role id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.DeleteRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a role (id in body)
+      tags:
+      - roles
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Role update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.UpdateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a role (id in body)
+      tags:
+      - roles
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Role
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.CreateRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a role
+      tags:
+      - roles
+  /roles/assign-permissions:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Assignment
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.AssignPermissionsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Replace a role's permission set
+      tags:
+      - roles
+  /roles/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.ListRolesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List roles with offset pagination
+      tags:
+      - roles
+  /service-types:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/servicetype.DeleteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a service type (id in body)
+      tags:
+      - service-types
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/servicetype.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a service type (id in body)
+      tags:
+      - service-types
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Service type
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/servicetype.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a service type
+      tags:
+      - service-types
+  /service-types/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/servicetype.ListRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List service types with offset pagination
+      tags:
+      - service-types
+  /settings:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Shop settings
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/settings.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update the shop configuration (singleton, no id needed)
+      tags:
+      - settings
+  /settings/view:
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Get the shop configuration
+      tags:
+      - settings
+  /users:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: User id
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.DeleteUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Delete a user (id in body)
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: User update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Update a user (id in body)
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: Create a user
+      tags:
+      - users
+  /users/list:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Page request
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/auth.ListUsersRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Envelope'
+      security:
+      - BearerAuth: []
+      summary: List users with offset pagination
+      tags:
+      - users
+swagger: "2.0"

@@ -1,0 +1,155 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: laundry-pro-postgres
+    environment:
+      POSTGRES_DB: laundry_pro
+      POSTGRES_USER: aeroxe
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aeroxe -d laundry_pro"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: laundry-pro-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  nats:
+    image: nats:2.10-alpine
+    container_name: laundry-pro-nats
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    # -m enables the HTTP monitoring endpoint (the default config file is not
+    # auto-loaded when extra args like -js are passed on the command line, so
+    # monitor_port from the image config never takes effect without it).
+    command: ["-js", "-m", "8222"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "http://localhost:8222/healthz", "-O", "-"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laundry-pro-app
+    environment:
+      PORT: "8080"
+      ENV: production
+      LOG_LEVEL: info
+      LOG_FORMAT: json
+      DATABASE_URL: postgres://aeroxe:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@postgres:5432/laundry_pro?sslmode=disable
+      REDIS_URL: redis://redis:6379
+      REDIS_PREFIX: laundry-pro
+      NATS_URL: nats://nats:4222
+      NATS_ENABLED: "true"
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?set ENCRYPTION_KEY in .env}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD in .env}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@laundrypro.local}
+      ADMIN_NAME: ${ADMIN_NAME:-System Administrator}
+      PASSWORD_COST: "12"
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      JWT_EXPIRY: 24h
+      SHUTDOWN_TIMEOUT: 15s
+      OUTBOX_POLL_INTERVAL: 2s
+      OUTBOX_BATCH_SIZE: "50"
+      OUTBOX_MAX_RETRIES: "5"
+      RATE_LIMIT_PER_MIN: "120"
+      MAX_BODY_BYTES: "5242880"
+    expose:
+      - "8080"
+    # The app is only reachable through the Caddy proxy; do not publish 8080
+    # directly to the host in production.
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: laundry-pro-web
+    expose:
+      - "80"
+    # Health is defined once in the image (frontend/Dockerfile HEALTHCHECK).
+    depends_on:
+      app:
+        condition: service_started
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2.8-alpine
+    container_name: laundry-pro-caddy
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:-localhost}
+      # Default here (not just in the Caddyfile placeholder) so the container
+      # never sees an empty ACME_EMAIL: Caddy's {$VAR:default} only falls back
+      # when the variable is unset, not when it is set-but-empty.
+      ACME_EMAIL: ${ACME_EMAIL:-admin@example.com}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddydata:/data
+      - caddyconfig:/config
+    depends_on:
+      app:
+        condition: service_started
+      web:
+        condition: service_started
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: laundry-pro-prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=30d
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - promdata:/prometheus
+    depends_on:
+      app:
+        condition: service_started
+    restart: unless-stopped
+
+  blackbox:
+    image: prom/blackbox-exporter:v0.25.0
+    container_name: laundry-pro-blackbox
+    ports:
+      - "9115:9115"
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
+  caddydata:
+  caddyconfig:
+  promdata:

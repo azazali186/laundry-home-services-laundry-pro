@@ -1,0 +1,30 @@
+# golangci-lint configuration (v1 schema, pinned to v1.62.2 in CI).
+#
+# Note: on 32-bit/Windows dev boxes the analysis loader can fail on
+# github.com/bytedance/sonic (Hertz dep) with "no export data" errors. That
+# is a toolchain/architecture limitation only; CI runs linux/amd64 where the
+# full analysis works.
+run:
+  timeout: 5m
+  tests: true
+  # Generated OpenAPI registration code (docs.go) is not linted.
+  exclude-dirs:
+    - docs
+
+linters:
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - misspell
+    - unconvert
+
+issues:
+  exclude-rules:
+    # Test helpers intentionally ignore some returned errors.
+    - path: _test\.go
+      linters:
+        - errcheck

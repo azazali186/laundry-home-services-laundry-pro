@@ -1,0 +1,15 @@
+# Gitleaks configuration for the LaundryPro repo.
+#
+# The committed .env.example / .env.production.example files intentionally
+# contain placeholder secrets (Admin@12345, REPLACE_WITH_..., dev-* strings)
+# so developers can copy them into real environment files. Allowlist those
+# template paths so the CI secret scan does not fail on its own docs.
+[extend]
+
+[allowlist]
+  description = "Env template files ship documented placeholders by design"
+  paths = [
+    '''backend/\.env\.example''',
+    '''backend/\.env\.production\.example''',
+    '''README\.md''',
+  ]

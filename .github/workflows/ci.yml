@@ -1,0 +1,167 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GO_VERSION: "1.25.x"
+
+jobs:
+  backend:
+    name: Backend (build · vet · tests · lint · vuln · swagger)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: true
+
+      - name: Build
+        run: go build ./...
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Formatting (gofmt)
+        run: |
+          unformatted=$(gofmt -l . | grep -v '^docs/' || true)
+          if [ -n "$unformatted" ]; then
+            echo "gofmt required on:"; echo "$unformatted"; exit 1
+          fi
+
+      - name: Unit tests (coverage)
+        run: go test ./... -coverprofile=coverage.out -covermode=atomic -count=1
+
+      - name: Coverage gate (>= 70%)
+        run: |
+          total=$(go tool cover -func=coverage.out | grep '^total:' | awk '{print $3}' | tr -d '%')
+          echo "Total coverage: ${total}%"
+          if [ "$(echo "$total < 70" | bc -l)" -eq 1 ]; then
+            echo "::error::Coverage ${total}% is below the 70% threshold"
+            exit 1
+          fi
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.62.2
+          args: --timeout=5m
+          working-directory: backend
+
+      - name: Vulnerability scan
+        run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+
+      # Pinned to the same version used to generate the committed docs/swagger
+      # so the freshness gate is deterministic (unpinned @latest would flake).
+      - name: Install swag
+        run: go install github.com/swaggo/swag/cmd/swag@v1.8.1
+
+      - name: Swagger freshness
+        run: make swagger-check
+
+  integration:
+    name: Integration (live server + Postgres + Redis)
+    runs-on: ubuntu-latest
+    needs: backend
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: aeroxe
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: laundry_pro
+        ports:
+          - 5433:5432 # matches the dev default DATABASE_URL
+        options: >-
+          --health-cmd "pg_isready -U aeroxe -d laundry_pro"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: true
+
+      - name: Build server binary
+        run: go build -o bin/server cmd/server/main.go
+
+      - name: Start server and wait for readiness
+        env:
+          ENV: development
+          PORT: "9090"
+          DATABASE_URL: postgres://aeroxe:secret@localhost:5433/laundry_pro?sslmode=disable
+          REDIS_URL: redis://localhost:6379
+          REDIS_PREFIX: ci-laundry-pro
+          JWT_SECRET: ci-jwt-secret-at-least-32-characters-long
+          ENCRYPTION_KEY: ci-encryption-key-at-least-32-characters
+        run: |
+          ./bin/server > /tmp/backend.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://localhost:9090/api/v1/health/ready >/dev/null 2>&1; then
+              echo "server ready after ${i} tries"
+              break
+            fi
+            sleep 2
+          done
+          curl -fsS http://localhost:9090/api/v1/health/ready
+
+      - name: Integration tests
+        env:
+          BASE_URL: http://localhost:9090/api/v1
+        run: go test ./tests/... -tags=integration -count=1 -v
+
+      - name: Server log tail
+        if: failure()
+        run: tail -100 /tmp/backend.log
+
+  frontend:
+    name: Frontend (typecheck · build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build

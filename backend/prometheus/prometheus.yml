@@ -1,0 +1,38 @@
+# Prometheus scrape configuration for LaundryPro.
+# All business endpoints are POST/PATCH/DELETE; /metrics is the GET scrape
+# target. Metrics carry HTTP request latency/counters, outbox gauges and
+# NATS circuit-breaker histograms.
+global:
+  scrape_interval: 15s
+
+rule_files:
+  - /etc/prometheus/alerts.yml
+
+scrape_configs:
+  - job_name: laundrypro
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["app:8080"]
+        labels:
+          service: laundry-pro
+          env: production
+
+  # External-style uptime probe: reaches the readiness endpoint through the
+  # Caddy reverse proxy exactly as an external monitoring system would.
+  - job_name: blackbox-readiness
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - http://caddy/api/v1/health/ready
+        labels:
+          service: laundry-pro
+          env: production
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox:9115

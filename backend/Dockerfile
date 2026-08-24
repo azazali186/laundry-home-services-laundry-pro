@@ -16,7 +16,7 @@ RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
     go build -trimpath -ldflags="-s -w" -o /out/server ./cmd/server
 
 # ---- runtime stage ----
-FROM alpine:3.20
+FROM alpine:3.24
 RUN apk add --no-cache ca-certificates tzdata \
     && addgroup -S -g 10001 app \
     && adduser -S -D -u 10001 -G app app

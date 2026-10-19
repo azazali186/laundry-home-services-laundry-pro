@@ -3,7 +3,7 @@ module github.com/aeroxe/laundry-pro/backend
 go 1.25.0
 
 require (
-	github.com/alicebob/miniredis/v2 v2.38.0
+	github.com/alicebob/miniredis/v2 v2.40.0
 	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/cloudwego/hertz v0.10.6
 	github.com/glebarez/sqlite v1.11.0
